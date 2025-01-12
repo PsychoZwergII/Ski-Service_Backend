@@ -1,0 +1,47 @@
+@SkiService_HostAddress = http://localhost:5231
+
+### Get all skis
+GET http://localhost:5231/api/Orders
+
+### Get a specific ski by ID
+GET http://localhost:5231/api/Orders/{id}
+
+### Update an existing ski by ID
+PUT http://localhost:5231/api/Orders/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "customerName": "Anna Beispiel",
+    "email": "anna.beispiel@example.com",
+    "phone": "987654321",
+    "priority": "Low",
+    "status": "Completed",
+    "serviceId": 2,
+    "service": {
+      "id": 2,
+      "name": "Ski Tuning"
+    }
+}
+
+
+### Create a new order
+POST http://localhost:5231/api/Orders
+Content-Type: application/json
+
+{
+    "id": 0,
+    "customerName": "Max Muster",
+    "email": "max.muster@example.com",
+    "phone": "123456789",
+    "priority": "High",
+    "status": "Pending",
+    "serviceId": 1,
+    "service": {
+      "id": 1,
+      "name": "Ski Repair"
+    }
+}
+
+### Delete a ski by ID
+DELETE http://localhost:5231/api/Orders/1

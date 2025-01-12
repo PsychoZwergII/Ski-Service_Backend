@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SNOWBOARD SERVICE - Jetstream-Service</title>
+        <link rel="icon" href="../IMG/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="../CSS/styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <header>
+                <a href="../index.html">
+                    <img
+                        id="logo"
+                        src="../IMG/logo.png"
+                        alt="Logo"
+                        width="200px"
+                        style="position: absolute; top: 20px; right: 10px"
+                    />
+                </a>
+                <button class="hamburger" onclick="openSidebar()">☰</button>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()"
+                        >×</a
+                    >
+                    <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                    <a href="kontakt.html"><i class="fas fa-users"></i> Über Uns</a>
+                    <a href="schreiben.html"><i class="bi bi-envelope-fill"></i> Kontakt</a>
+                    <a href="dienstleistungen.html"
+                        ><i class="bi bi-tools""></i> Dienstleistungen</a
+                    >
+                    <a href="anmeldung.html"><i class="fas fa-user-plus"></i> Anmelden</a>
+                </div>
+            </header>
+            <header>
+                <h1 id="title">SNOWBOARD SERVICE</h1>
+            </header>
+            <button
+                id="scrollToTop"
+                class="d-flex align-items-center justify-content-center"
+            >
+                <i class="bi bi-arrow-up"></i>
+            </button>
+        <main>
+            <section id="service">
+                <div class="card-deck-container">
+                    <div class="card">
+                        <img
+                            class="card-img-top"
+                            src="../IMG/snowboard-service-klein.jpg"
+                            alt="Kleiner Service"
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">Kleiner Service – CHF 49.00</h5>
+                            <ul style="text-align: left;">
+                                <li>Bandschliff</li>
+                                <li>Seiten und Belagskante schleifen</li>
+                                <li>wachsen</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img
+                        class="card-img-top"
+                        src="../IMG/snowboard-service-gross.jpg"
+                        alt="Grosser Service"
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">Grosser Service – CHF 69.00</h5>
+                            <ul style="text-align: left;">
+                                <li>Belag ausbessern</li>
+                                <li>Bandschliff</li>
+                                <li>Seiten und Belagskante schleifen</li>
+                                <li>wachsen</li>
+                            </ul>
+                        </div>
+                    </div>
+                        <div class="card">
+                            <img
+                            class="card-img-top"
+                            src="../IMG/snowboard-service.jpg"
+                            alt="Card image cap"
+                            />
+                            <div class="card-body">
+                                <h5 class="card-title">Premium Service – CHF 89.00</h5>
+                                <p style="text-align: left;">
+                                    Der präzise Premium Service – unser Tipp für noch mehr Fahrvergnügen,
+                                    nicht nur für Profi-Snowboarder.
+                                </p>
+                                <ul style="text-align: left;">
+                                    <li>Belag ausbessern</li>
+                                <li>Belag planschleifen</li>
+                                <li>Premium-Race-Belagstruktur</li>
+                                <li>3°-Seitenkanten-Präzisionsschliff</li>
+                                <li>Belagskante-Feintuning</li>
+                                <li>Spezialwachs</li>
+                                </ul>
+                            </div>
+                         </div>
+                <br />
+                <div style="text-align: center; margin-top: 20px">
+                    <a
+                        href="dienstleistungen.html"
+                        class="btn btn-lg btn-primary"
+                        style="
+                            background-color: #1e3d59;
+                            border-color: #1e3d59;
+                            margin-right: 10px;
+                        "
+                        onmouseover="this.style.backgroundColor='#16324f'; this.style.borderColor='#16324f';"
+                        onmouseout="this.style.backgroundColor='#1e3d59'; this.style.borderColor='#1e3d59';"
+                        >Zurück</a
+                    >
+                    <a
+                        href="anmeldung.html"
+                        class="btn btn-lg btn-primary"
+                        style="background-color: #1e3d59; border-color: #1e3d59"
+                        onmouseover="this.style.backgroundColor='#16324f'; this.style.borderColor='#16324f';"
+                        onmouseout="this.style.backgroundColor='#1e3d59'; this.style.borderColor='#1e3d59';"
+                        >Anmelden</a
+                    >
+                </div>
+            </section>
+        <section id="contact">
+            <h2>Kontakt</h2>
+            <p>Jetstream-Service GmbH</p>
+            <p>Adresse: Skiweg 45, 8000 Zürich, Schweiz</p>
+            <p>Telefon: +41 (0)44 123 45 67</p>
+            <p>
+                E-Mail:
+                <a href="mailto:info@jetstream-service.ch">info@jetstream-service.ch</a>
+            </p>
+        </section>
+        <script src="../JS/script.js"></script>
+    </body>
+</html>
