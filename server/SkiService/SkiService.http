@@ -1,18 +1,36 @@
-@SkiService_HostAddress = http://localhost:5231
+@SkiService_HostAddress = http://localhost:5231/api/
 
-### Get all skis
-GET http://localhost:5231/api/Orders
+### Authentifizierung
+### Login für JWT-Token
 
-### Get a specific ski by ID
-GET http://localhost:5231/api/Orders/{id}
+POST http://localhost:5231/api/Auth/login
+Content-Type: application/json
 
-### Update an existing ski by ID
-PUT http://localhost:5231/api/Orders/1
+{
+  "username": "admin",
+  "password": "password"
+}
+
+
+### Alle Serviceaufträge abrufen
+GET http://localhost:5231/api/Order/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M
+---
+
+### Einen spezifischen Serviceauftrag anhand der ID abrufen
+GET http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ
+
+---
+
+### Einen bestehenden Serviceauftrag anhand der ID aktualisieren
+PUT http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ
 Content-Type: application/json
 
 {
     "id": 1,
-    "customerName": "Anna Beispiel",
+    "customerName": "Anna Example",
     "email": "anna.beispiel@example.com",
     "phone": "987654321",
     "priority": "Low",
@@ -24,24 +42,24 @@ Content-Type: application/json
     }
 }
 
+---
 
-### Create a new order
-POST http://localhost:5231/api/Orders
+### Einen neuen Serviceauftrag erstellen
+
+POST  http://localhost:5231/api/Order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M
 Content-Type: application/json
 
 {
-    "id": 0,
-    "customerName": "Max Muster",
-    "email": "max.muster@example.com",
-    "phone": "123456789",
-    "priority": "High",
-    "status": "Pending",
-    "serviceId": 1,
-    "service": {
-      "id": 1,
-      "name": "Ski Repair"
-    }
+    "Id": 1,
+    "CustomerName": "Max Muster",
+    "Email": "max.muster@example.com",
+    "Phone": "123456789",
+    "Priority": "High",
+    "Status": "Pending",
+    "ServiceId": 1
 }
 
-### Delete a ski by ID
-DELETE http://localhost:5231/api/Orders/1
+### Einen Serviceauftrag anhand der ID löschen
+DELETE http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ

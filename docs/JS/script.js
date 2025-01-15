@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append("pickup_date", pickupDate);
       // Senden an den Server
 
-      fetch("http://localhost:5000/api/registration", {
+      fetch("http://localhost:5231/api/registration", {
         method: "POST",
         body: JSON.stringify({
           ...Object.fromEntries(formData),

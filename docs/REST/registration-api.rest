@@ -1,22 +1,65 @@
-### Open-API, Swagger
-GET http://localhost:5000/api/api-docs
+@SkiService_HostAddress = http://localhost:5231/api/
 
-### GET registration
-GET http://localhost:5000/api/registrations
+### Authentifizierung
+### Login für JWT-Token
 
-### POST registration
-POST http://localhost:5000/api/registration
-Content-Type: application/json;charset=UTF-8
+POST http://localhost:5231/api/Auth/login
+Content-Type: application/json
 
 {
-        "name":"Bernd Werfel",
-        "email":"BerndWerfel@renault.com",
-        "phone":"031 745 56 14",
-        "priority":"Standard",
-        "service":"Heisswachsen",
-        "create_date":"2022-11-25T18:12:43.511Z",
-        "pickup_date":"2022-12-02T18:12:43.511Z"
+  "username": "admin",
+  "password": "password"
 }
 
-### Delete
-DELETE http://localhost:5000/api/registration/8
+
+### Alle Serviceaufträge abrufen
+GET http://localhost:5231/api/Order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6ImIwY2I0YjQzLWE5NGQtNDU4Mi04ZmMxLWJhMTViMWVjZDliMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM4NzU4fQ.vyTiRPvPNTD8cQf4_zoD4lE8z8dfwOr1BCFcDX0k5GE
+---
+
+### Einen spezifischen Serviceauftrag anhand der ID abrufen
+GET http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ
+
+---
+
+### Einen bestehenden Serviceauftrag anhand der ID aktualisieren
+PUT http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ
+Content-Type: application/json
+
+{
+    "id": 1,
+    "customerName": "Anna Example",
+    "email": "anna.beispiel@example.com",
+    "phone": "987654321",
+    "priority": "Low",
+    "status": "Completed",
+    "serviceId": 2,
+    "service": {
+      "id": 2,
+      "name": "Ski Tuning"
+    }
+}
+
+---
+
+### Einen neuen Serviceauftrag erstellen
+POST http://localhost:5231/api/Order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjUwZjE5NDI2LTA3OTQtNDlhOS1iNTUzLThkYThmZDA3NWEzMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM3NDk1fQ.eMJPyfIWb6V5z3DRfv8RBsu29vYXzfZFoH_fhNJ6FiQ
+Content-Type: application/json
+
+{
+    "customerName": "Max Muster",
+    "email": "max.muster@example.com",
+    "phone": "123456789",
+    "priority": "High",
+    "status": "Pending",
+    "serviceId": 1
+}
+
+---
+
+### Einen Serviceauftrag anhand der ID löschen
+DELETE http://localhost:5231/api/Order/{id}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ

@@ -1,5 +1,7 @@
 C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\appsettings.Development.json
 C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\appsettings.json
+C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\swagger.json
+C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\SkiService.staticwebassets.endpoints.json
 C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\SkiService.exe
 C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\SkiService.deps.json
 C:\Module\Ski-Service_Backend_295\server\SkiService\bin\Debug\net8.0\SkiService.runtimeconfig.json
@@ -97,14 +99,17 @@ C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.csproj.CoreCompileInputs.cache
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.MvcApplicationPartsAssemblyInfo.cs
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.MvcApplicationPartsAssemblyInfo.cache
+C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.sourcelink.json
+C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\scopedcss\bundle\SkiService.styles.css
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets.build.json
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets.development.json
+C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets\msbuild.SkiService.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets\msbuild.SkiService.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets\msbuild.build.SkiService.props
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.SkiService.props
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.SkiService.props
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\scopedcss\bundle\SkiService.styles.css
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.csproj.Up2Date
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\SkiService.dll
 C:\Module\Ski-Service_Backend_295\server\SkiService\obj\Debug\net8.0\refint\SkiService.dll

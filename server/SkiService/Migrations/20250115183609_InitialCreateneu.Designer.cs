@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiService.Models;
 
@@ -10,9 +11,11 @@ using SkiService.Models;
 namespace SkiService.Migrations
 {
     [DbContext(typeof(SkiServiceDbContext))]
-    partial class SkiServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250115183609_InitialCreateneu")]
+    partial class InitialCreateneu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,7 +101,7 @@ namespace SkiService.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Service");
+                    b.ToTable("Services");
                 });
 #pragma warning restore 612, 618
         }

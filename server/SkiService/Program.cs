@@ -7,6 +7,10 @@ using SkiService.Models; // Ensure this namespace matches where SkiServiceDbCont
 
 var builder = WebApplication.CreateBuilder(args);
 
+// JWT-Einstellungen aus der Konfiguration laden
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+
 // Add services to the container.
 // Database Context Configuration
 builder.Services.AddDbContext<SkiServiceDbContext>(options =>
@@ -14,21 +18,25 @@ builder.Services.AddDbContext<SkiServiceDbContext>(options =>
     new MySqlServerVersion(new Version(8, 0, 23))));
 
 // Authentication Setup
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
 
+// Add controllers
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -40,8 +48,8 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API für den Ski-Service",
         Contact = new OpenApiContact
         {
-            Name = "Dein Name",
-            Email = "deine.email@domain.com",
+            Name = "Leon Egli",
+            Email = "leonegli6@gmail.com",
         }
     });
 });
@@ -55,14 +63,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkiService API v1");
-        c.RoutePrefix = string.Empty; // Startet Swagger direkt auf der Root-URL
+        c.RoutePrefix = "api"; // Startet Swagger direkt auf der Root-URL
     });
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // Registriert die Controller
+});
+// Authentication und Authorization Middleware
 
 app.MapControllers();
 

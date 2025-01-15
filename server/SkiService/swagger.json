@@ -1,0 +1,200 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ski-Service Management API",
+    "version": "1.0.0",
+    "description": "API zur Verwaltung von Ski-Service-Aufträgen. Ermöglicht die Bearbeitung und Verwaltung von Serviceaufträgen durch autorisierte Mitarbeiter."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5231",
+      "description": "Lokale Entwicklungsumgebung"
+    }
+  ],
+  "paths": {
+    "/Order": {
+      "get": {
+        "summary": "Alle Serviceaufträge abrufen",
+        "description": "Liefert eine Liste aller Serviceaufträge. Keine Authentifizierung erforderlich.",
+        "responses": {
+          "200": {
+            "description": "Liste aller Serviceaufträge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Order/{id}": {
+      "put": {
+        "summary": "Status eines Auftrags ändern",
+        "description": "Ändert den Status eines spezifischen Auftrags. Authentifizierung erforderlich.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID des zu ändernden Auftrags",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auftrag erfolgreich aktualisiert"
+          },
+          "400": {
+            "description": "Ungültige Anfrage"
+          },
+          "401": {
+            "description": "Nicht autorisiert"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Auftrag löschen",
+        "description": "Markiert einen Auftrag als gelöscht. Authentifizierung erforderlich.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID des zu löschenden Auftrags",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auftrag erfolgreich gelöscht"
+          },
+          "400": {
+            "description": "Ungültige Anfrage"
+          },
+          "401": {
+            "description": "Nicht autorisiert"
+          }
+        }
+      }
+    },
+    "/Auth/login": {
+      "post": {
+        "summary": "Mitarbeiter-Login",
+        "description": "Authentifiziert einen Mitarbeiter und gibt ein JWT zurück.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Erfolgreiches Login mit Token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Ungültige Anmeldedaten"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "customerName": {
+            "type": "string",
+            "example": "Max Mustermann"
+          },
+          "email": {
+            "type": "string",
+            "example": "max.mustermann@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+4915112345678"
+          },
+          "serviceType": {
+            "type": "string",
+            "example": "Rennski-Service"
+          },
+          "priority": {
+            "type": "string",
+            "example": "Hoch"
+          },
+          "status": {
+            "type": "string",
+            "example": "Offen"
+          }
+        }
+      },
+      "UpdateOrder": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "InArbeit"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      }
+    }
+  }
+}

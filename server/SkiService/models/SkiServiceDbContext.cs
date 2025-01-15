@@ -9,6 +9,6 @@ public class SkiServiceDbContext : DbContext
 
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<Service> Services { get; set; }
+    public DbSet<Service> Service { get; set; }
 }
 }

@@ -1,10 +1,16 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkiService.Models;
 
+
+
 namespace SkiService.Controllers
 {
+    //[Route("[controller]")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    //[Authorize]
+    [AllowAnonymous]
     public class OrderController : ControllerBase
     {
         private readonly SkiServiceDbContext _context;
@@ -17,7 +23,16 @@ namespace SkiService.Controllers
         [HttpGet]
         public IActionResult GetAllOrders()
         {
-            var orders = _context.Orders.ToList();
+            var orders = _context.Orders.Select(o => new
+            {
+                o.Id,
+                o.CustomerName,
+                o.Email,
+                o.Phone,
+                o.Priority,
+                o.Status,
+                o.ServiceId // Stelle sicher, dass diese Spalte existiert
+            }).ToList();
             return Ok(orders);
         }
 
