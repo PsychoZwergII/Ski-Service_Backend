@@ -538,24 +538,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const currentDate = new Date().toISOString();
       const pickupDate = document.getElementById("pickup-date").value;
-      const serviceId = document.getElementById("service").value;
+      const serviceSelect = document.querySelector("#service-select");
+      const serviceId =
+        serviceSelect.options[serviceSelect.selectedIndex].dataset.serviceId; // Die numerische `serviceId` aus der Datenbank
 
-      const orderData = {
+      /* const orderData = {
         customerName: formData.get("name"),
         email: formData.get("email"),
         phone: formData.get("phone"),
         priority: formData.get("priority"),
         status: "Pending",
-        serviceId: serviceId,
+        serviceId: Number(serviceId), // Hier sicherstellen, dass es eine Zahl ist
         create_date: currentDate,
         pickup_date: pickupDate,
-      };
+      };*/
 
       // API-Anfrage senden
       fetch("http://localhost:5231/api/Order", {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(orderData),
+        body: JSON.stringify({
+          customerName: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          priority: formData.get("priority"),
+          status: "Pending",
+          serviceId: Number(
+            document.querySelector(`#service option[value="${serviceId}"]`)
+              .value
+          ), // serviceId richtig extrahieren
+          create_date: currentDate,
+          pickup_date: pickupDate,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -587,7 +601,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch((error) => {
           console.error("Fehler:", error);
-          showErrorNotification("Es gab ein Problem mit der Serviceanmeldung.");
+          showErrorNotification(
+            "Es gab ein Problem mit der Serviceanmeldung. Überprüfen Sie die Service-Auswahl."
+          );
         });
     }
   }

@@ -95,6 +95,18 @@ appBuilder.MapPost("/api/Order", async (Order order, SkiServiceDbContext db) =>
     return Results.Ok(order);
 });
 
+var serviceName = order.Service; // Der Name aus der Anfrage
+var serviceId = db.Services
+                    .Where(s => s.Name == serviceName)
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
+if (serviceId == 0)
+{
+    return Results.BadRequest("Invalid service selected.");
+}
+order.ServiceId = serviceId;
+
+
 appBuilder.UseCors("AllowWebApp");
 appBuilder.UseHttpsRedirection();
 appBuilder.UseRouting();
