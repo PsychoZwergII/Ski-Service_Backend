@@ -342,36 +342,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-const scrollToTopButton = document.getElementById("scrollToTop");
-
-// Show or hide the button when scrolling
-window.onscroll = function () {
-  if (
-    document.body.scrollTop > 200 ||
-    document.documentElement.scrollTop > 200
-  ) {
-    scrollToTopButton.style.display = "flex";
-  } else {
-    scrollToTopButton.style.display = "none";
-  }
-};
-
-// Scroll to the top when the button is clicked
-scrollToTopButton.addEventListener("click", function () {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-});
-
-window.openSidebar = function () {
-  document.getElementById("mySidebar").style.width = "250px";
-};
-
-window.closeSidebar = function () {
-  document.getElementById("mySidebar").style.width = "0";
-};
-
 document.addEventListener("DOMContentLoaded", function () {
   // Hilfsfunktion: Benachrichtigung anzeigen
   function showErrorNotification(message) {
@@ -393,6 +363,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const notificationElement = document.getElementById("notification");
     notificationElement.classList.remove("show");
   }
+
+  const scrollToTopButton = document.getElementById("scrollToTop");
+
+  // Show or hide the button when scrolling
+  window.onscroll = function () {
+    if (
+      document.body.scrollTop > 200 ||
+      document.documentElement.scrollTop > 200
+    ) {
+      scrollToTopButton.style.display = "flex";
+    } else {
+      scrollToTopButton.style.display = "none";
+    }
+  };
+
+  // Scroll to the top when the button is clicked
+  scrollToTopButton.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+
+  window.openSidebar = function () {
+    document.getElementById("mySidebar").style.width = "250px";
+  };
+
+  window.closeSidebar = function () {
+    document.getElementById("mySidebar").style.width = "0";
+  };
 
   // Funktion: Formularvalidierung
   function validateForm() {
