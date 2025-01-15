@@ -67,6 +67,23 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+var builder = WebApplication.CreateBuilder(args);
+
+// CORS-Konfiguration hinzufügen
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("https://psychozwergii.github.io") // Erlaube spezifische Origins
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigins"); // Middleware aktivieren
+
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
