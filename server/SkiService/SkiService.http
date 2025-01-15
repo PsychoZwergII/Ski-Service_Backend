@@ -1,4 +1,4 @@
-@SkiService_HostAddress = http://localhost:5231/api/
+@SkiService_HostAddress = http://localhost:5231/
 
 ### Authentifizierung
 ### Login für JWT-Token

@@ -55,7 +55,19 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-var app = builder.Build();
+// CORS erlauben
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowWebApp",
+        builder =>
+        {
+            builder.WithOrigins("https://psychozwergii.github.io") // Erlaube deine Web-App
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
+var app = builder.Build();  // Haupt-Instanz des WebApplication
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -68,33 +80,18 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-var builder = WebApplication.CreateBuilder(args);
+var appBuilder = app;  // Hier jetzt ein anderer Name, um Konflikte zu vermeiden
 
-// CORS-Konfiguration hinzufügen
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigins", policy =>
-    {
-        policy.WithOrigins("https://psychozwergii.github.io") // Erlaube spezifische Origins
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
+appBuilder.UseCors("AllowWebApp");
+appBuilder.UseHttpsRedirection();
+appBuilder.UseRouting();
+appBuilder.UseAuthentication();
+appBuilder.UseAuthorization();
 
-var app = builder.Build();
-
-app.UseCors("AllowSpecificOrigins"); // Middleware aktivieren
-
-app.UseHttpsRedirection();
-app.UseRouting();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseEndpoints(endpoints =>
+appBuilder.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers(); // Registriert die Controller
 });
+
 // Authentication und Authorization Middleware
-
-
-app.Run();
+appBuilder.Run();

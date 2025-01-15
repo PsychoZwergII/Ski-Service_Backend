@@ -41,9 +41,9 @@ public class AuthController : ControllerBase
     private string GenerateJwtToken()
     {
         var jwtSettings = _configuration.GetSection("Jwt");
-        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]); // Schlüssel aus der Konfiguration laden
-        var issuer = jwtSettings["SkiServiceAPI"];
-        var audience = jwtSettings["SkiServiceClients"];
+        var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]); // Schlüssel aus der Konfiguration laden
+        var issuer = jwtSettings["Issuer"];
+        var audience = jwtSettings["Audience"];
 
         var claims = new[]
         {
@@ -66,8 +66,8 @@ public class AuthController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
-inRequest DTO
-// Log
+
+// Request DTO
 public class LoginRequest
 {
     public string Username { get; set; }
