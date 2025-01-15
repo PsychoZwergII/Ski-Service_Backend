@@ -6,6 +6,7 @@ using System.Text;
 using SkiService.Models; // Ensure this namespace matches where SkiServiceDbContext is defined
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://localhost:5231");
 
 // JWT-Einstellungen aus der Konfiguration laden
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -81,6 +82,18 @@ if (app.Environment.IsDevelopment())
 }
 
 var appBuilder = app;  // Hier jetzt ein anderer Name, um Konflikte zu vermeiden
+
+appBuilder.MapPost("/api/Order", async (Order order, SkiServiceDbContext db) =>
+{
+    Console.WriteLine("POST request received");
+    if (order == null)
+    {
+        return Results.BadRequest("Invalid Order data");
+    }
+    await db.Orders.AddAsync(order);
+    await db.SaveChangesAsync();
+    return Results.Ok(order);
+});
 
 appBuilder.UseCors("AllowWebApp");
 appBuilder.UseHttpsRedirection();
