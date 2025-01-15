@@ -87,7 +87,68 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("mySidebar").style.width = "0";
   };
 
+  // Formular einreichen
   const form = document.getElementById("serviceForm");
+  form.onsubmit = function (event) {
+    event.preventDefault(); // Verhindert das Standard-Formular-Submit
+
+    if (validateForm()) {
+      const formData = new FormData(form);
+      const currentDate = new Date().toISOString();
+      const pickupDate = document.getElementById("pickup-date").value;
+      const serviceId = document.getElementById("service").value;
+
+      // API-Anfrage senden
+      fetch("http://localhost:5231/api/Order", {
+        method: "POST",
+        body: JSON.stringify({
+          customerName: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          priority: formData.get("priority"),
+          status: "Pending", // Default-Wert
+          serviceId: serviceId, // Neue Anpassung
+          create_date: currentDate,
+          pickup_date: pickupDate,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Fehler bei der Anfrage");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Erfolgreiche Weiterleitung
+          window.location.href = `ende.html?name=${encodeURIComponent(
+            formData.get("name")
+          )}&email=${encodeURIComponent(
+            formData.get("email")
+          )}&phone=${encodeURIComponent(
+            formData.get("phone")
+          )}&service=${encodeURIComponent(
+            document.querySelector(`#service option[value="${serviceId}"]`)
+              .textContent
+          )}&priority=${encodeURIComponent(
+            formData.get("priority")
+          )}&pickup-date=${encodeURIComponent(
+            pickupDate
+          )}&preis=${encodeURIComponent(
+            document.getElementById("preis").value
+          )}`;
+        })
+        .catch((error) => {
+          console.error("Fehler:", error);
+          showErrorNotification("Es gab ein Problem mit der Serviceanmeldung.");
+        });
+    }
+  };
+  /*  const form = document.getElementById("serviceForm");
   form.onsubmit = function (event) {
     event.preventDefault(); // Verhindert das Standard-Formular-Submit
 
@@ -100,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append("pickup_date", pickupDate);
       // Senden an den Server
 
-      fetch("http://localhost:5231/api/registration", {
+      fetch("http://localhost:5231/api/Order", {
         method: "POST",
         body: JSON.stringify({
           ...Object.fromEntries(formData),
@@ -108,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }), // Hier wird pickupDate hinzugefügt
         headers: {
           "Content-Type": "application/json",
+         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M"
         },
       })
         .then((response) => response.json())
@@ -139,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
           showErrorNotification("Es gab ein Problem mit der Serviceanmeldung.");
         });
     }
-  };
+  };*/
 
   // Logik für das Abholdatum
   const prioritySelect = document.getElementById("priority");

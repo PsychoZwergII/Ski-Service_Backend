@@ -56,8 +56,8 @@ public class AuthController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
-
-// LoginRequest DTO
+inRequest DTO
+// Log
 public class LoginRequest
 {
     public string Username { get; set; }

@@ -63,7 +63,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkiService API v1");
-        c.RoutePrefix = "api"; // Startet Swagger direkt auf der Root-URL
+        c.RoutePrefix = string.Empty; // Startet Swagger unter der Root-URL
     });
 }
 
@@ -78,6 +78,5 @@ app.UseEndpoints(endpoints =>
 });
 // Authentication und Authorization Middleware
 
-app.MapControllers();
 
 app.Run();

@@ -51,13 +51,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsI
 Content-Type: application/json
 
 {
-    "Id": 1,
     "CustomerName": "Max Muster",
     "Email": "max.muster@example.com",
     "Phone": "123456789",
-    "Priority": "High",
+    "Priority": "Express",
     "Status": "Pending",
-    "ServiceId": 1
+    "ServiceId": 6
 }
 
 ### Einen Serviceauftrag anhand der ID löschen
