@@ -95,16 +95,45 @@ appBuilder.MapPost("/api/Order", async (Order order, SkiServiceDbContext db) =>
     return Results.Ok(order);
 });
 
-var serviceName = order.Service; // Der Name aus der Anfrage
-var serviceId = db.Services
-                    .Where(s => s.Name == serviceName)
-                    .Select(s => s.Id)
-                    .FirstOrDefault();
-if (serviceId == 0)
+app.MapPost("/api/Order", async (HttpContext context, SkiServiceDbContext db) =>
 {
-    return Results.BadRequest("Invalid service selected.");
-}
-order.ServiceId = serviceId;
+    try
+    {
+        var requestBody = await context.Request.ReadFromJsonAsync<Order>();
+        
+        if (requestBody != null)
+        {
+            // Extrahiere die serviceId aus dem POST-Request
+            var serviceName = context.Request.Form["serviceId"].ToString();
+            
+            // Suche den Service in der Datenbank
+            var service = await db.Service.FirstOrDefaultAsync(s => s.Name == serviceName);
+
+            if (service != null)
+            {
+                requestBody.ServiceId = service.Id;  // Setze die ServiceId aus der gefundenen Service-Tabelle
+            }
+            else
+            {
+                return Results.BadRequest("Ungültiger Service ausgewählt.");
+            }
+
+            // Speichere die Order in der Datenbank
+            db.Orders.Add(requestBody);
+            await db.SaveChangesAsync();
+
+            return Results.Ok(requestBody);  // Erfolgreicher Status
+        }
+        else
+        {
+            return Results.BadRequest("Ungültige Daten.");
+        }
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(ex.Message);  // Fehlerbehandlung
+    }
+});
 
 
 appBuilder.UseCors("AllowWebApp");
