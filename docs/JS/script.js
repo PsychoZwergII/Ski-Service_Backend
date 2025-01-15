@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // API-Anfrage senden
       fetch("http://localhost:5231/api/Order", {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify({
           customerName: formData.get("name"),
           email: formData.get("email"),
@@ -113,8 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }),
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M",
         },
       })
         .then((response) => {

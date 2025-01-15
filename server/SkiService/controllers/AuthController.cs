@@ -22,6 +22,16 @@ public class AuthController : ControllerBase
         if (login.Username == "admin" && login.Password == "password")
         {
             var token = GenerateJwtToken();
+
+            // JWT in HttpOnly-Cookie speichern
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // Nur über HTTPS
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddHours(1)
+            });
+
             return Ok(new { Token = token });
         }
 
