@@ -539,21 +539,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const currentDate = new Date().toISOString();
       const pickupDate = document.getElementById("pickup-date").value;
-      const serviceSelect = document.getElementById("service");
+      const serviceId = Number(formData.get("service")); // 'service' entspricht dem 'name' des <select>
 
-      // Sicherstellen, dass das Dropdown existiert
-      if (!serviceSelect) {
-        console.error("Dropdown für Service-Auswahl nicht gefunden.");
-        showErrorNotification("Service-Auswahl fehlt oder ist ungültig.");
+      // Prüfe, ob die Service-ID eine Zahl ist
+      if (isNaN(serviceId)) {
+        console.error("Ungültige Service-ID.");
         return;
       }
-
-      // Ausgewählte Service-Informationen abrufen
-      const serviceId =
-        serviceSelect.options[serviceSelect.selectedIndex]?.value;
-      const serviceName =
-        serviceSelect.options[serviceSelect.selectedIndex]?.textContent;
-
       // API-Anfrage senden
       fetch("http://localhost:5231/api/Order", {
         method: "POST",
@@ -564,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phone: formData.get("phone"),
           priority: formData.get("priority"),
           status: "Pending",
-          serviceId: Number(serviceId), // Konvertiere serviceId zu einer Zahl
+          serviceId: serviceId, // ID des ausgewählten Services
           create_date: currentDate,
           pickup_date: pickupDate,
         }),
@@ -586,8 +578,8 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.get("email")
           )}&phone=${encodeURIComponent(
             formData.get("phone")
-          )}&service=${encodeURIComponent(
-            serviceName
+          )}&serviceId=${encodeURIComponent(
+            serviceId
           )}&priority=${encodeURIComponent(
             formData.get("priority")
           )}&pickup-date=${encodeURIComponent(
