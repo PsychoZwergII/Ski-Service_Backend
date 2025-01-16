@@ -527,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const currentDate = new Date().toISOString();
       const pickupDate = document.getElementById("pickup-date").value;
-      const serviceSelect = document.getElementById("serviceSelect");
+      const serviceSelect = document.getElementById("service1");
 
       // Sicherstellen, dass das Dropdown existiert
       if (!serviceSelect) {
