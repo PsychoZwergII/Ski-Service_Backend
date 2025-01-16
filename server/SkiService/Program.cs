@@ -59,11 +59,11 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowWebApp",
-        corsBuilder =>
+        builder =>
         {
-            corsBuilder.AllowAnyOrigin() // Für lokale Tests Alle erlauben, später anpassen
-                      .AllowAnyMethod()
-                      .AllowAnyHeader();
+            builder.WithOrigins("https://psychozwergii.github.io") // Erlaube deine Web-App
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
         });
 });
 
@@ -79,6 +79,20 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger"; // Swagger verfügbar unter /swagger
     });
 }
+
+var appBuilder = app;  // Hier jetzt ein anderer Name, um Konflikte zu vermeiden
+/*
+appBuilder.MapPost("/api/Order", async (Order order, SkiServiceDbContext db) =>
+{
+    Console.WriteLine("POST request received");
+    if (order == null)
+    {
+        return Results.BadRequest("Invalid Order data");
+    }
+    await db.Orders.AddAsync(order);
+    await db.SaveChangesAsync();
+    return Results.Ok(order);
+});*/
 
 app.UseCors("AllowWebApp");
 app.UseHttpsRedirection();

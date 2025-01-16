@@ -8,7 +8,7 @@ namespace SkiService.Controllers
 {
     //[Route("[controller]")]
     [ApiController]
-    [Route("api/Controller")]
+    [Route("api/[controller]")]
     //[Authorize]
     [AllowAnonymous]
     public class OrderController : ControllerBase
@@ -47,16 +47,23 @@ namespace SkiService.Controllers
             return Ok(order);
         }
 
-        [HttpPost]
+      [HttpPost]
         public IActionResult CreateOrder([FromBody] Order order)
         {
             if (order == null)
             {
-                return BadRequest();
+                return BadRequest("Order cannot be null.");
+            }
+
+            // Überprüfe die ServiceId
+            if (!_context.Service.Any(s => s.Id == order.ServiceId))
+            {
+                return BadRequest("Invalid ServiceId.");
             }
 
             _context.Orders.Add(order);
             _context.SaveChanges();
+
             return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
         }
 
