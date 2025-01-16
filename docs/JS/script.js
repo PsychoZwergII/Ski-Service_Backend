@@ -331,18 +331,7 @@ document
 */
 
 //-----------------------------2.Version-------------------------------------------------------
-if ("serviceWorker" in navigator) {
-  caches.keys().then(function (names) {
-    for (let name of names) caches.delete(name);
-  });
-  navigator.serviceWorker.getRegistrations().then(function (registrations) {
-    for (let registration of registrations) {
-      registration.unregister();
-    }
-  });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   // Hilfsfunktion: Benachrichtigung anzeigen
   function showErrorNotification(message) {
     const notificationElement = document.getElementById("notification");
@@ -540,18 +529,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const pickupDate = document.getElementById("pickup-date").value;
       const serviceSelect = document.querySelector("#service-select");
       const serviceId =
-        serviceSelect.options[serviceSelect.selectedIndex].dataset.serviceId; // Die numerische `serviceId` aus der Datenbank
-
-      /* const orderData = {
-        customerName: formData.get("name"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        priority: formData.get("priority"),
-        status: "Pending",
-        serviceId: Number(serviceId), // Hier sicherstellen, dass es eine Zahl ist
-        create_date: currentDate,
-        pickup_date: pickupDate,
-      };*/
+        serviceSelect.options[serviceSelect.selectedIndex]?.dataset.serviceId;
 
       // API-Anfrage senden
       fetch("http://localhost:5231/api/Order", {
