@@ -105,5 +105,16 @@ namespace SkiService.Controllers
             _context.SaveChanges();
             return NoContent();
         }
+
+        [HttpOptions("Order")]
+        public IActionResult Options()
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+            Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+
+            return Ok();
+        }
     }
 }

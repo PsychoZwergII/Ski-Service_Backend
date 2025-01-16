@@ -58,12 +58,13 @@ builder.Services.AddSwaggerGen(c =>
 // CORS erlauben
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowWebApp",
+    options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
             builder.WithOrigins("https://psychozwergii.github.io") // Erlaube deine Web-App
                    .AllowAnyMethod()
-                   .AllowAnyHeader();
+                   .AllowAnyHeader()
+                   .AllowCredentials();
         });
 });
 
@@ -94,7 +95,7 @@ appBuilder.MapPost("/api/Order", async (Order order, SkiServiceDbContext db) =>
     return Results.Ok(order);
 });*/
 
-app.UseCors("AllowWebApp");
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();

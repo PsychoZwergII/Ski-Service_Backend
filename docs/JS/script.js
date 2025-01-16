@@ -331,6 +331,18 @@ document
 */
 
 //-----------------------------2.Version-------------------------------------------------------
+
+if ("serviceWorker" in navigator) {
+  caches.keys().then(function (names) {
+    for (let name of names) caches.delete(name);
+  });
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Hilfsfunktion: Benachrichtigung anzeigen
   function showErrorNotification(message) {
@@ -411,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Funktion: Preisberechnung
   function calculateTotalPrice() {
     const priorityElement = document.getElementById("priority");
-    const serviceElement = document.getElementById("service1");
+    const serviceElement = document.getElementById("service");
     const priceElement = document.getElementById("preis");
 
     const priorityPrice = parseFloat(
@@ -527,7 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const currentDate = new Date().toISOString();
       const pickupDate = document.getElementById("pickup-date").value;
-      const serviceSelect = document.getElementById("service1");
+      const serviceSelect = document.getElementById("service");
 
       // Sicherstellen, dass das Dropdown existiert
       if (!serviceSelect) {
@@ -545,7 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // API-Anfrage senden
       fetch("http://localhost:5231/api/Order", {
         method: "POST",
-        credentials: "include",
+        credentials: "same-origin", // Statt 'include'
         body: JSON.stringify({
           customerName: formData.get("name"),
           email: formData.get("email"),

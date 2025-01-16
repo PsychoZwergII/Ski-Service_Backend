@@ -45,12 +45,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsI
 Content-Type: application/json
 
 {
-    "CustomerName": "down buckle",
-    "Email": "shaw.buckle@example.com",
+    "CustomerName": "heu wilamus",
+    "Email": "heu.wilamus@example.com",
     "Phone": "123456789",
     "Priority": "Express",
     "Status": "Pending",
-    "ServiceId": 7
+    "ServiceId": 6
 }
 
 ### Einen Serviceauftrag anhand der ID löschen
