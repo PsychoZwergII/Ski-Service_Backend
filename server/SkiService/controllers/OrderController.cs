@@ -8,7 +8,7 @@ namespace SkiService.Controllers
 {
     //[Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Controller")]
     //[Authorize]
     [AllowAnonymous]
     public class OrderController : ControllerBase

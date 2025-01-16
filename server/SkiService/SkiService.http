@@ -1,5 +1,4 @@
-@SkiService_HostAddress = http://localhost:5231/
-
+@SkiService_HostAddress = http://localhost:5231/swagger
 ### Authentifizierung
 ### Login für JWT-Token
 
@@ -51,12 +50,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsI
 Content-Type: application/json
 
 {
-    "CustomerName": "don Creek",
-    "Email": "don.Creek@example.com",
+    "CustomerName": "Adonis Hollywood Creed",
+    "Email": "adonis.Creed@example.com",
     "Phone": "123456789",
     "Priority": "Express",
     "Status": "Pending",
-    "ServiceId": 6
+    "ServiceId": 13
 }
 
 ### Einen Serviceauftrag anhand der ID löschen
