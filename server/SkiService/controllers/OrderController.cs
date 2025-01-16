@@ -47,7 +47,7 @@ namespace SkiService.Controllers
             return Ok(order);
         }
 
-      [HttpPost]
+        [HttpPost]
         public IActionResult CreateOrder([FromBody] Order order)
         {
             if (order == null)
@@ -61,6 +61,13 @@ namespace SkiService.Controllers
                 return BadRequest("Invalid ServiceId.");
             }
 
+            // Überprüfe, ob das PickupDate im Request enthalten ist
+            if (order.pickup_date == default)
+            {
+                return BadRequest("PickupDate is required.");
+            }
+
+            // Order speichern
             _context.Orders.Add(order);
             _context.SaveChanges();
 

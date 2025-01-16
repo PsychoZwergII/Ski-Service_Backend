@@ -8,5 +8,7 @@ public class Order
     public string Status { get; set; } = "Offen"; // Default status
     public int ServiceId { get; set; }
     public Service? Service { get; set; } // Optional machen
+    public DateTime create_date { get; set; } = DateTime.Now;
+    public DateTime pickup_date { get; set; } // Neue Spalte
     public bool IsDeleted { get; set; } = false; // For AO6: Soft Delete
 }

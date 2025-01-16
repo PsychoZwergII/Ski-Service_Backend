@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsI
 ---
 
 ### Einen spezifischen Serviceauftrag anhand der ID abrufen
-GET http://localhost:5231/api/Order/2
+GET http://localhost:5231/api/Order/11
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjNiNjNmY2M1LWM0N2MtNGI0Yy04MWQ0LWRmZjNjODVmNGM2OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTU1MjI1fQ.fBqQTPdMLERAwl8SVQ4b78hQkew0MA2GEeQCAQAi38M
 
 ---
@@ -50,7 +50,8 @@ Content-Type: application/json
     "Phone": "123456789",
     "Priority": "Express",
     "Status": "Pending",
-    "ServiceId": 6
+    "ServiceId": 6,
+    "pickup_date": "2025-01-23T10:00:00"
 }
 
 ### Einen Serviceauftrag anhand der ID löschen
