@@ -411,7 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Funktion: Preisberechnung
   function calculateTotalPrice() {
     const priorityElement = document.getElementById("priority");
-    const serviceElement = document.getElementById("service");
+    const serviceElement = document.getElementById("service1");
     const priceElement = document.getElementById("preis");
 
     const priorityPrice = parseFloat(
