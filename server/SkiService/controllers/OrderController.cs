@@ -31,7 +31,7 @@ namespace SkiService.Controllers
                 o.Phone,
                 o.Priority,
                 o.Status,
-                o.ServiceId // Stelle sicher, dass diese Spalte existiert
+                o.ServiceId, // Stelle sicher, dass diese Spalte existiert
             }).ToList();
             return Ok(orders);
         }
@@ -77,31 +77,47 @@ namespace SkiService.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateOrder(int id, [FromBody] Order updatedOrder)
         {
-            if (id != updatedOrder.Id)
+            if (!_context.Users.Any(u => u.Username == User.Identity.Name)) 
             {
-                return BadRequest();
+                return Unauthorized("Unauthorized Access");
             }
 
-            var existingOrder = _context.Orders.Find(id);
-            if (existingOrder == null)
+             if (!_context.Userroles.Any(ur => ur.User.Username == User.Identity.Name && (ur.Role == "Mitarbeiter" || ur.Role == "Admin")))
+            {
+                return Unauthorized("You do not have permission to update orders.");
+            }
+
+            var order = _context.Orders.Find(id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            existingOrder.CustomerName = updatedOrder.CustomerName;
-            existingOrder.Email = updatedOrder.Email;
-            existingOrder.Phone = updatedOrder.Phone;
-            existingOrder.Priority = updatedOrder.Priority;
-            existingOrder.Status = updatedOrder.Status;
-            existingOrder.ServiceId = updatedOrder.ServiceId;
+            order.CustomerName = updatedOrder.CustomerName;
+            order.Email = updatedOrder.Email;
+            order.Phone = updatedOrder.Phone;
+            order.Priority = updatedOrder.Priority;
+            order.pickup_date = updatedOrder.pickup_date;
+            order.ServiceId = updatedOrder.ServiceId;
 
             _context.SaveChanges();
-            return NoContent();
+
+            return Ok(order);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteOrder(int id)
         {
+            if (!_context.Users.Any(u => u.Username == User.Identity.Name)) 
+            {
+                return Unauthorized("Unauthorized Access");
+            }
+
+            if (!_context.Userroles.Any(ur => ur.User.Username == User.Identity.Name && (ur.Role == "Mitarbeiter" || ur.Role == "Admin")))
+            {
+                return Unauthorized("You do not have permission to delete orders.");
+            }
+
             var order = _context.Orders.Find(id);
             if (order == null)
             {
@@ -110,8 +126,9 @@ namespace SkiService.Controllers
 
             _context.Orders.Remove(order);
             _context.SaveChanges();
-            return NoContent();
-        }
+
+            return Ok(order);
+}
 
         [HttpOptions("Order")]
         public IActionResult Options()

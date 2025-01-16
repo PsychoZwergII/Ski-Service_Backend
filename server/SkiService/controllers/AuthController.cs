@@ -1,41 +1,62 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SkiService.Models;
 
 [Route("api/Auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
+    private readonly SkiServiceDbContext _context;
     private readonly IConfiguration _configuration;
 
-    public AuthController(IConfiguration configuration)
+    public AuthController(SkiServiceDbContext context, IConfiguration configuration)
     {
+        _context = context;
         _configuration = configuration;
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest login)
+    public async Task<IActionResult> Login([FromBody] LoginRequest login)
     {
-        // Beispiel-Benutzerdaten für die Authentifizierung
-        if (login.Username == "admin" && login.Password == "password")
+        if (login == null)
         {
-            var token = GenerateJwtToken();
-
-            // JWT in HttpOnly-Cookie speichern
-            Response.Cookies.Append("jwt", token, new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true, // Nur über HTTPS
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddHours(1)
-            });
-
-            return Ok(new { Token = token });
+            return BadRequest("Invalid login attempt.");
         }
 
-        return Unauthorized("Invalid credentials");
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == login.Username && u.PasswordHash == login.Password);
+
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+        var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Userroles.FirstOrDefault()?.Role ?? "")  // Optional: Falls keine Rolle gefunden wird
+        };
+
+        var token = new JwtSecurityToken(
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddHours(1),
+            signingCredentials: creds
+        );
+
+        return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(token) });
     }
 
     private string GenerateJwtToken()
