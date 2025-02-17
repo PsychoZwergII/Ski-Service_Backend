@@ -454,146 +454,146 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    document
-      .getElementById("downloadInvoice")
-      .addEventListener("click", function () {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+    // Funktion: Abholdatum berechnen
+    function updatePickupDate() {
+      const prioritySelect = document.getElementById("priority");
+      const currentDate = new Date();
+      let additionalDays;
 
-        // Read URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get("name");
-        const email = urlParams.get("email");
-        const phone = urlParams.get("phone");
-        const service = urlParams.get("service");
-        const priority = urlParams.get("priority");
-        const pickupDate = urlParams.get("pickup-date");
-        const price = urlParams.get("preis");
+      switch (prioritySelect.value) {
+        case "tief":
+          additionalDays = 5;
+          break;
+        case "standard":
+          additionalDays = 0;
+          break;
+        case "express":
+          additionalDays = -2;
+          break;
+        default:
+          additionalDays = 0;
+      }
 
-        console.log("Daten für PDF:", {
-          name,
-          email,
-          phone,
-          service,
-          priority,
-          pickupDate,
-          price,
+      const totalDays = 7 + additionalDays;
+      const pickupDate = new Date(currentDate);
+      pickupDate.setDate(currentDate.getDate() + totalDays);
+
+      const formattedDate = `${pickupDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")}.${(pickupDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${pickupDate.getFullYear().toString().slice(-2)}`;
+
+      document.getElementById("pickup-date").value = formattedDate;
+
+      document
+        .getElementById("downloadInvoice")
+        .addEventListener("click", function () {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+
+          // Read URL parameters
+          const urlParams = new URLSearchParams(window.location.search);
+          const name = urlParams.get("name");
+          const email = urlParams.get("email");
+          const phone = urlParams.get("phone");
+          const service = urlParams.get("service");
+          const priority = urlParams.get("priority");
+          const pickupDate = urlParams.get("pickup-date");
+          const price = urlParams.get("preis");
+
+          console.log("Daten für PDF:", {
+            name,
+            email,
+            phone,
+            service,
+            priority,
+            pickupDate,
+            price,
+          });
+
+          // Insert invoice data into the PDF
+          doc.text("Rechnung Jetstream-Service", 20, 20);
+          doc.text(`Name: ${name}`, 20, 30);
+          doc.text(`E-Mail: ${email}`, 20, 40);
+          doc.text(`Phone: ${phone}`, 20, 50);
+          doc.text(`Service: ${service}`, 20, 60);
+          doc.text(`Priority: ${priority}`, 20, 70);
+          doc.text(`Pickup Date: ${pickupDate}`, 20, 80);
+          doc.text(`Total Price: ${price}`, 20, 90);
+
+          // Download PDF
+          doc.save("Rechnung.pdf");
         });
-
-        // Insert invoice data into the PDF
-        doc.text("Rechnung Jetstream-Service", 20, 20);
-        doc.text(`Name: ${name}`, 20, 30);
-        doc.text(`E-Mail: ${email}`, 20, 40);
-        doc.text(`Phone: ${phone}`, 20, 50);
-        doc.text(`Service: ${service}`, 20, 60);
-        doc.text(`Priority: ${priority}`, 20, 70);
-        doc.text(`Pickup Date: ${pickupDate}`, 20, 80);
-        doc.text(`Total Price: ${price}`, 20, 90);
-
-        // Download PDF
-        doc.save("Rechnung.pdf");
-      });
-  }
-
-  // Funktion: Abholdatum berechnen
-  function updatePickupDate() {
-    const prioritySelect = document.getElementById("priority");
-    const currentDate = new Date();
-    let additionalDays;
-
-    switch (prioritySelect.value) {
-      case "tief":
-        additionalDays = 5;
-        break;
-      case "standard":
-        additionalDays = 0;
-        break;
-      case "express":
-        additionalDays = -2;
-        break;
-      default:
-        additionalDays = 0;
     }
 
-    const totalDays = 7 + additionalDays;
-    const pickupDate = new Date(currentDate);
-    pickupDate.setDate(currentDate.getDate() + totalDays);
+    // Funktion: Daten an die API senden
+    function submitFormData(event) {
+      event.preventDefault(); // Verhindert Standardverhalten des Formulars
 
-    const formattedDate = `${pickupDate
-      .getDate()
-      .toString()
-      .padStart(2, "0")}.${(pickupDate.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}.${pickupDate.getFullYear().toString().slice(-2)}`;
+      if (validateForm()) {
+        const form = document.getElementById("serviceForm");
+        const formData = new FormData(form);
 
-    document.getElementById("pickup-date").value = formattedDate;
-  }
+        const currentDate = new Date().toISOString();
+        const pickupDate = document.getElementById("pickup-date").value;
+        const serviceId = Number(formData.get("service")); // 'service' entspricht dem 'name' des <select>
 
-  // Funktion: Daten an die API senden
-  function submitFormData(event) {
-    event.preventDefault(); // Verhindert Standardverhalten des Formulars
-
-    if (validateForm()) {
-      const form = document.getElementById("serviceForm");
-      const formData = new FormData(form);
-
-      const currentDate = new Date().toISOString();
-      const pickupDate = document.getElementById("pickup-date").value;
-      const serviceId = Number(formData.get("service")); // 'service' entspricht dem 'name' des <select>
-
-      // Prüfe, ob die Service-ID eine Zahl ist
-      if (isNaN(serviceId)) {
-        console.error("Ungültige Service-ID.");
-        return;
+        // Prüfe, ob die Service-ID eine Zahl ist
+        if (isNaN(serviceId)) {
+          console.error("Ungültige Service-ID.");
+          return;
+        }
+        // API-Anfrage senden
+        fetch("http://localhost:5231/api/Order", {
+          method: "POST",
+          credentials: "same-origin", // Statt 'include'
+          body: JSON.stringify({
+            customerName: formData.get("name"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            priority: formData.get("priority"),
+            status: "Pending",
+            serviceId: serviceId, // ID des ausgewählten Services
+            create_date: currentDate,
+            pickup_date: pickupDate,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Fehler bei der Anfrage");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Erfolgreiche Weiterleitung
+            window.location.href = `ende.html?name=${encodeURIComponent(
+              formData.get("name")
+            )}&email=${encodeURIComponent(
+              formData.get("email")
+            )}&phone=${encodeURIComponent(
+              formData.get("phone")
+            )}&serviceId=${encodeURIComponent(
+              serviceId
+            )}&priority=${encodeURIComponent(
+              formData.get("priority")
+            )}&pickup-date=${encodeURIComponent(
+              pickupDate
+            )}&preis=${encodeURIComponent(
+              document.getElementById("preis").value
+            )}`;
+          })
+          .catch((error) => {
+            console.error("Fehler:", error);
+            showErrorNotification(
+              "Es gab ein Problem mit der Serviceanmeldung. Überprüfen Sie die Service-Auswahl."
+            );
+          });
       }
-      // API-Anfrage senden
-      fetch("http://localhost:5231/api/Order", {
-        method: "POST",
-        credentials: "same-origin", // Statt 'include'
-        body: JSON.stringify({
-          customerName: formData.get("name"),
-          email: formData.get("email"),
-          phone: formData.get("phone"),
-          priority: formData.get("priority"),
-          status: "Pending",
-          serviceId: serviceId, // ID des ausgewählten Services
-          create_date: currentDate,
-          pickup_date: pickupDate,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Fehler bei der Anfrage");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Erfolgreiche Weiterleitung
-          window.location.href = `ende.html?name=${encodeURIComponent(
-            formData.get("name")
-          )}&email=${encodeURIComponent(
-            formData.get("email")
-          )}&phone=${encodeURIComponent(
-            formData.get("phone")
-          )}&serviceId=${encodeURIComponent(
-            serviceId
-          )}&priority=${encodeURIComponent(
-            formData.get("priority")
-          )}&pickup-date=${encodeURIComponent(
-            pickupDate
-          )}&preis=${encodeURIComponent(
-            document.getElementById("preis").value
-          )}`;
-        })
-        .catch((error) => {
-          console.error("Fehler:", error);
-          showErrorNotification(
-            "Es gab ein Problem mit der Serviceanmeldung. Überprüfen Sie die Service-Auswahl."
-          );
-        });
     }
   }
 

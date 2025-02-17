@@ -10,43 +10,52 @@ Content-Type: application/json
   "password": "password"
 }
 
+###
+POST http://localhost:5231/api/Auth/login
+Content-Type: application/json
+
+{
+  "username": "employee1",
+  "password": "password1"
+}
 
 ### Alle Serviceaufträge abrufen
 GET http://localhost:5231/api/Order/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjM1MjI1OGUyLWVmZWQtNGM1ZS05YTk3LTFhOWVjOGE2MzJiNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM3MDU1NDUxLCJpc3MiOiJTa2lTZXJ2aWNlQVBJIiwiYXVkIjoiU2tpU2VydmljZUNsaWVudHMifQ.9WWxF5qP56OU0OhsZ1JMHnpSVAFbqRrZigr5oxMgx8Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIiLCJleHAiOjE3Mzk0NzUwNzEsImlzcyI6IlNraVNlcnZpY2VBUEkiLCJhdWQiOiJTa2lTZXJ2aWNlQ2xpZW50cyJ9.OUfs-qz3r-o1r_rHkoJUTe_pVB4cbtg_eG_UC8j0fEo
 
 
 ### Einen spezifischen Serviceauftrag anhand der ID abrufen
-GET http://localhost:5231/api/Order/13
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjM1MjI1OGUyLWVmZWQtNGM1ZS05YTk3LTFhOWVjOGE2MzJiNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM3MDU1NDUxLCJpc3MiOiJTa2lTZXJ2aWNlQVBJIiwiYXVkIjoiU2tpU2VydmljZUNsaWVudHMifQ.9WWxF5qP56OU0OhsZ1JMHnpSVAFbqRrZigr5oxMgx8Q
+GET http://localhost:5231/api/Order/16
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIiLCJleHAiOjE3Mzk1NDAwODMsImlzcyI6IlNraVNlcnZpY2VBUEkiLCJhdWQiOiJTa2lTZXJ2aWNlQ2xpZW50cyJ9.NerRgm419gZhnrNFSdnQKhEu_dx4AVOxdCzs1UWxHSM
 
 
 
 ### Einen bestehenden Serviceauftrag anhand der ID aktualisieren
 PUT http://localhost:5231/api/Order/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjM1MjI1OGUyLWVmZWQtNGM1ZS05YTk3LTFhOWVjOGE2MzJiNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM3MDU1NDUxLCJpc3MiOiJTa2lTZXJ2aWNlQVBJIiwiYXVkIjoiU2tpU2VydmljZUNsaWVudHMifQ.9WWxF5qP56OU0OhsZ1JMHnpSVAFbqRrZigr5oxMgx8Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIiLCJleHAiOjE3Mzk1NDQzMjMsImlzcyI6IlNraVNlcnZpY2VBUEkiLCJhdWQiOiJTa2lTZXJ2aWNlQ2xpZW50cyJ9.jwVgSPlkdBg-Zx_6n-tbAaBrjaLgWI8hbQzEZdhOOsQ
 Content-Type: application/json
 
 {
-    "id": 2,
+    "id": 20,
     "customerName": "Anna Schmidt",
     "email": "anna.schmidt@example.com",
     "phone": "0987654321",
     "priority": "Express",
     "status": "Completed",
-    "serviceId": 3
+    "serviceId": 3,
+    "pickup_date": "2025-01-23"
 }
 
 
 ### Einen neuen Serviceauftrag erstellen
 
-POST  http://localhost:5231/api/Order/
+POST http://localhost:5231/api/Order/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjM1MjI1OGUyLWVmZWQtNGM1ZS05YTk3LTFhOWVjOGE2MzJiNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM3MDU1NDUxLCJpc3MiOiJTa2lTZXJ2aWNlQVBJIiwiYXVkIjoiU2tpU2VydmljZUNsaWVudHMifQ.9WWxF5qP56OU0OhsZ1JMHnpSVAFbqRrZigr5oxMgx8Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIiLCJleHAiOjE3Mzk1NDM4MzYsImlzcyI6IlNraVNlcnZpY2VBUEkiLCJhdWQiOiJTa2lTZXJ2aWNlQ2xpZW50cyJ9.m6bDXNf9Vg1JcoFQt1huJf8jLFDnhuvTCrHPdLvMXFE
 
 {
-    "CustomerName": "heu wilamus",
-    "Email": "heu.wilamus@example.com",
+    "CustomerName": "Maria Curry",
+    "Email": "Maria.Curry@example.com",
     "Phone": "123456789",
     "Priority": "Express",
     "Status": "Pending",
@@ -55,5 +64,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsI
 }
 
 ### Einen Serviceauftrag anhand der ID löschen
-DELETE http://localhost:5231/api/Order/11
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjkyYjI2YjFkLTgyZjItNDkzNS05MDUyLThlYWIzYjc2YzU1MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzM2OTM2NzU5fQ.OSvyEp2aaiPc10_V_ZxTT-djTa4QeO4q5Jt83zSU4zQ
+DELETE http://localhost:5231/api/Order/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIiLCJleHAiOjE3Mzk1NDA4OTksImlzcyI6IlNraVNlcnZpY2VBUEkiLCJhdWQiOiJTa2lTZXJ2aWNlQ2xpZW50cyJ9.8xovVCsRcBsxaEx33vbf1SguDZaMGFNSnHWPLYrfN4E
